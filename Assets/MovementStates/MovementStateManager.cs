@@ -26,7 +26,7 @@ public class MovementStateManager : MonoBehaviour
     [HideInInspector] public Animator anim;
     void Start()
     {
-        anim = GetComponentInChildren<Animator>();
+        anim = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
         SwitchState(Idle);
     }
@@ -80,7 +80,7 @@ public class MovementStateManager : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        if(Gizmos.color != null)
+        if(controller != null)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(spherePos, controller.radius - 0.05f);
