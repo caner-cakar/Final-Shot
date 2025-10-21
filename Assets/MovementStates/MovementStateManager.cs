@@ -80,10 +80,10 @@ public class MovementStateManager : MonoBehaviour
 
     void OnDrawGizmos()
     {
-       
+        if(Gizmos.color != null)
+        {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(spherePos, controller.radius - 0.05f);
-        
-        
+        }
     }
 }
