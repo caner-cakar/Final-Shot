@@ -16,20 +16,34 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] AudioClip gunShot;
     AudioSource audioSource;
     WeaponAmmo ammo;
+    WeaponBloom bloom;
     ActionStateManager actions;
+    WeaponRecoil recoil;
+
+    Light muzzleFlashLight;
+    ParticleSystem muzzleFlashParticles;
+    float lightIntensity;
+    [SerializeField] float lightReturnSpeed =20;
     
     void Start()
     {
+        recoil = GetComponent<WeaponRecoil>();
         audioSource = GetComponent<AudioSource>();
         aim = GetComponentInParent<AimStateManager>();
         ammo = GetComponent<WeaponAmmo>();
+        bloom = GetComponent<WeaponBloom>();
         actions = GetComponentInParent<ActionStateManager>();
+        muzzleFlashLight = GetComponentInChildren<Light>();
+        lightIntensity = muzzleFlashLight.intensity;
+        muzzleFlashLight.intensity = 0;
+        muzzleFlashParticles = GetComponentInChildren<ParticleSystem>();
         fireRateTimer = fireRate;
     }
 
     void Update()
     {
         if (ShouldFire()) Fire();
+        muzzleFlashLight.intensity = Mathf.Lerp(muzzleFlashLight.intensity, 0, lightReturnSpeed * Time.deltaTime);
     }
 
     bool ShouldFire()
@@ -42,18 +56,30 @@ public class WeaponManager : MonoBehaviour
         if (!semiAuto && Input.GetKey(KeyCode.Mouse0)) return true;
         return false;
     }
-    
+
     void Fire()
     {
         fireRateTimer = 0;
-        barrelPosition.LookAt(aim.aimPos);
-        audioSource.PlayOneShot(gunShot);
         ammo.currentAmmo--;
-        for(int i =0; i < bulletsPerShot; i++)
+        barrelPosition.LookAt(aim.aimPos);
+        barrelPosition.localEulerAngles = bloom.BloomAngle(barrelPosition);
+
+        audioSource.PlayOneShot(gunShot);
+        TriggerMuzzleFlash();
+        recoil.TriggerRecoil();
+        
+        
+        for (int i = 0; i < bulletsPerShot; i++)
         {
             GameObject currentBullet = Instantiate(bullet, barrelPosition.position, barrelPosition.rotation);
             Rigidbody rb = currentBullet.GetComponent<Rigidbody>();
             rb.AddForce(barrelPosition.forward * bulletVelocity, ForceMode.Impulse);
         }
+    }
+    
+    void TriggerMuzzleFlash()
+    {
+        muzzleFlashParticles.Play();
+        muzzleFlashLight.intensity = lightIntensity;
     }
 }

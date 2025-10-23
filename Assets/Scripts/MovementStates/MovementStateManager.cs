@@ -17,7 +17,7 @@ public class MovementStateManager : MonoBehaviour
     Vector3 velocity;
     Vector3 spherePos;
 
-    MovementBaseState currentState;
+    public MovementBaseState currentState;
     public IdleState Idle = new IdleState();
     public WalkState Walk = new WalkState();
     public CrouchState Crouch = new CrouchState();
