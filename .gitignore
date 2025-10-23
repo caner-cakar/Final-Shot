@@ -101,3 +101,6 @@ InitTestScene*.unity*
 # models
 Assets/Player/
 Assets/Animations/
+Assets/Enemy/
+Assets/Sounds/
+Assets/Weapons/
