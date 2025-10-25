@@ -4,7 +4,6 @@ using UnityEngine.AI;
 public class EnemyHealth : MonoBehaviour
 {
     public float health;
-    RagdollManager ragdollManager;
     [HideInInspector] public bool isDead;
     Animator animator;
     public Terrain terrain;
@@ -13,7 +12,6 @@ public class EnemyHealth : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        ragdollManager = GetComponent<RagdollManager>();
     }
     
 
@@ -25,25 +23,18 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (health > 0)
+        health -= damage;
+        if (health <= 0)
         {
-            health -= damage;
-            if (health <= 0) EnemyDeath();
-            else
-            {
-                animator.SetTrigger("Damage");
-                Debug.Log("Hit");
-            }
+            animator.SetTrigger("die");
+            GetComponent<CapsuleCollider>().enabled = false;
+            isDead = true;
+        }
+        else
+        {
+            animator.SetTrigger("damage");
+            isDead = false;
         }
 
-    }
-    
-
-    void EnemyDeath()
-    {
-        isDead = true;
-        ragdollManager.TriggerRagdoll();
-        Debug.Log("Death");
-    }
-    
+    }    
 }
