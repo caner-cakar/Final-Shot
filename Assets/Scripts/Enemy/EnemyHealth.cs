@@ -6,7 +6,6 @@ public class EnemyHealth : MonoBehaviour
     public float health;
     [HideInInspector] public bool isDead;
     Animator animator;
-    public Terrain terrain;
 
 
     void Start()
@@ -15,20 +14,18 @@ public class EnemyHealth : MonoBehaviour
     }
     
 
-    void LateUpdate()
-    {
-        float terrainHeight = terrain.SampleHeight(transform.position);
-        transform.position = new Vector3(transform.position.x, terrainHeight, transform.position.z);
-    }
 
     public void TakeDamage(float damage)
     {
         health -= damage;
         if (health <= 0)
         {
+            gameObject.layer = LayerMask.NameToLayer("DeadEnemy");
+            GetComponentInChildren<Collider>().enabled = false;
             animator.SetTrigger("die");
-            GetComponent<CapsuleCollider>().enabled = false;
+
             isDead = true;
+            Destroy(gameObject, 5f);
         }
         else
         {

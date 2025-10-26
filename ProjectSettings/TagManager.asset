@@ -5,17 +5,18 @@ TagManager:
   serializedVersion: 3
   tags:
   - Waypoints
+  - Ground
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Env
   - Water
   - UI
   - Ground
   - Player
   - Bullet
-  - 
+  - DeadEnemy
   - 
   - 
   - 

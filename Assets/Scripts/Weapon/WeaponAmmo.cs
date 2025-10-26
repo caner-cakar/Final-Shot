@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class WeaponAmmo : MonoBehaviour
@@ -8,11 +9,16 @@ public class WeaponAmmo : MonoBehaviour
     public AudioClip magInSound;
     public AudioClip magOutSound;
     public AudioClip releaseSlideSound;
+    [SerializeField] TextMeshProUGUI currentAmmoText;
     void Start()
     {
         currentAmmo = clipSize;
     }
 
+    void Update()
+    {
+        currentAmmoText.text = currentAmmo.ToString();
+    }
 
     public void Reload()
     {

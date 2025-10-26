@@ -41,6 +41,11 @@ public class MovementStateManager : MonoBehaviour
         anim.SetFloat("vInput", verticalInput);
 
         currentState.UpdateState(this);
+
+        if (dir.magnitude < 0.1f)
+        {
+            dir = Vector3.zero;
+        }
     }
 
     public void SwitchState(MovementBaseState state)

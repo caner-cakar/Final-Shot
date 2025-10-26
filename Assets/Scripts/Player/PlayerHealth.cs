@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerHealth : MonoBehaviour
     MovementStateManager movementStateManager;
     AimStateManager aimStateManager;
     ActionStateManager actionStateManager;
+    [SerializeField] Slider healthbar;
 
     void Start()
     {
@@ -19,6 +21,12 @@ public class PlayerHealth : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
+        UpdateHealthBar();
+    }
+
+    private void UpdateHealthBar()
+    {
+        healthbar.value = currentHealth;
     }
 
     public void TakeDamage(float damage)
@@ -26,10 +34,11 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= damage;
         Debug.Log("Player Health: " + currentHealth);
 
-        if(currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             Die();
         }
+        UpdateHealthBar();
     }
 
     void Die()
