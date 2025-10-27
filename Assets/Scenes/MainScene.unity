@@ -23344,6 +23344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 547dbcc65b7c7434aa1ed77261d87811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 1849855089}
   maxHealth: 100
   weapon: {fileID: 46342525818270057}
   healthbar: {fileID: 1540975515}

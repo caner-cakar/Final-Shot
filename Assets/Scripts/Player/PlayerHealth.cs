@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
+    public GameManagment gameManager; 
     public float maxHealth = 100f;
     private float currentHealth;
     Animator animator;
@@ -49,8 +50,9 @@ public class PlayerHealth : MonoBehaviour
         characterController.enabled = false;
         movementStateManager.enabled = false;
         aimStateManager.enabled = false;
-        
-        
+        gameManager.Death();
+
+
         if (weapon != null)
             weapon.SetActive(false); // Silah gizle
     }
