@@ -6,46 +6,110 @@ public class GameManagment : MonoBehaviour
 {
     public GameObject gameEndPanel;
 
+    public AudioSource menuMusicSource;    
+
+    public GameObject pauseMenuPanel;
+    private bool isPaused = false;
+
     private void Start()
     {
         gameEndPanel.SetActive(false);
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        if (currentSceneName == "MainMenu")
+        {
+            Time.timeScale = 0f; 
+            if (menuMusicSource != null)
+            {
+                menuMusicSource.ignoreListenerPause = true;
+                menuMusicSource.Play();
+            }
+        }
+        else if (currentSceneName == "MainScene")
+        {
+            Time.timeScale = 1f; 
+            if (gameEndPanel != null)
+            {
+                gameEndPanel.SetActive(false);
+            }
+        }
     }
     public void StartButton()
     {
+        if (menuMusicSource != null)
+        {
+            menuMusicSource.Stop(); 
+        }
+        Time.timeScale = 1f; 
         SceneManager.LoadScene("MainScene");
     }
 
     public void MainMenuButton()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.N))
+        if (SceneManager.GetActiveScene().name != "MainScene")
         {
-            Death();
+            return;
         }
-        if(Input.GetKeyDown(KeyCode.Escape))
+
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            gameEndPanel.SetActive(false);
+            // EÄŸer "Ã–lÃ¼m Paneli" aÃ§Ä±ksa, Pause menÃ¼sÃ¼nÃ¼ aÃ§ma
+            if (gameEndPanel != null && gameEndPanel.activeInHierarchy)
+            {
+                return;
+            }
+
+            if (isPaused)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
         }
     }
 
-    public void Death()//karakter öldüðünde çaðýrýlacak fonksiyon;
+    void PauseGame()
+    {
+        if (pauseMenuPanel != null) pauseMenuPanel.SetActive(true);
+        Time.timeScale = 0f;
+        isPaused = true;
+    }
+
+    public void ResumeGame()
+    {
+        if (pauseMenuPanel != null) pauseMenuPanel.SetActive(false);
+        Time.timeScale = 1f;
+        isPaused = false;
+    }
+
+    public void Death()
     {
       
-        gameEndPanel.SetActive(true);
+        if (gameEndPanel != null)
+        {
+            gameEndPanel.SetActive(true);
+        }
+        Time.timeScale = 0f;
         
     }
 
     public void PlayAgain()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("MainScene");
     }
 
     public void QuitGame()
     {
         Application.Quit();
+        UnityEditor.EditorApplication.isPlaying = false;
     }
 }
