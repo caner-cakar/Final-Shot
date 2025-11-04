@@ -54,6 +54,6 @@ public class PlayerHealth : MonoBehaviour
 
 
         if (weapon != null)
-            weapon.SetActive(false); // Silah gizle
+            weapon.SetActive(false);
     }
 }

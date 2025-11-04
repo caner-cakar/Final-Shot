@@ -14,11 +14,9 @@ public class EnemyIdleS : IEnemyState
         timer += Time.deltaTime;
     
 
-        // Patrol'e geçiş
         if (timer > 5f)
             enemy.SwitchState(enemy.patrolState);
 
-        // Chase'e geçiş
         float distance = Vector3.Distance(enemy.player.position, enemy.transform.position);
         if (distance < enemy.chaseRange)
             enemy.SwitchState(enemy.chaseState);
@@ -26,6 +24,5 @@ public class EnemyIdleS : IEnemyState
 
     public void ExitState(EnemyStateManager enemy)
     {
-        // Idle’dan çıkarken yapılacaklar
     }
 }

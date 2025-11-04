@@ -13,7 +13,6 @@ public class EnemyStateManager : MonoBehaviour
 
     IEnemyState currentState;
 
-    // Durumlar
     public EnemyIdleS idleState = new EnemyIdleS();
     public PatrolState patrolState = new PatrolState();
     public ChaseState chaseState = new ChaseState();
@@ -31,9 +30,11 @@ public class EnemyStateManager : MonoBehaviour
 
     void Update()
     {
+        if (enemyHealth == null || enemyHealth.isDead) 
+            return;
+
         currentState.UpdateState(this);
     }
-
     public void SwitchState(IEnemyState newState)
     {
         if (currentState != null)

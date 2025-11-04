@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class DamageToPlayer : MonoBehaviour
 {
-    public float damage = 20f; // Vurma başına hasar
-    public float attackCooldown = 2f; // Hasar verme süresi aralığı (1 saniye)
+    public float damage = 20f;
+    public float attackCooldown = 2f; 
     [HideInInspector] public bool canDamage = true;
     Animator animator;
 

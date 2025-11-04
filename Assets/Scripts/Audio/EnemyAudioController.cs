@@ -54,7 +54,7 @@ public class EnemyAudioController : MonoBehaviour
     {
         if (clip == null) return;
 
-        audioSource.Stop(); // önceki sesi durdur
+        audioSource.Stop();
         audioSource.clip = clip;
         audioSource.volume = volume;
         audioSource.loop = loop;

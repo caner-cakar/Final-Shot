@@ -15,7 +15,6 @@ public class EnemyAudioCheck : MonoBehaviour
 
     void Update()
     {
-        // Örnek state kontrolü — senin FSM’ine göre düzenlenir:
         if (enemyHealth.isDead)
         {
             audioController.StopSound();

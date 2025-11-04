@@ -6,11 +6,13 @@ public class EnemyHealth : MonoBehaviour
     public float health;
     [HideInInspector] public bool isDead;
     Animator animator;
+    NavMeshAgent agent;
 
 
     void Start()
     {
         animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
     }
     
 
@@ -20,11 +22,15 @@ public class EnemyHealth : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
-            gameObject.layer = LayerMask.NameToLayer("DeadEnemy");
-            GetComponentInChildren<Collider>().enabled = false;
-            animator.SetTrigger("die");
-
             isDead = true;
+            gameObject.layer = LayerMask.NameToLayer("DeadEnemy");
+            agent.enabled = false;
+            GetComponentInChildren<Collider>().enabled = false;
+            animator.ResetTrigger("damage");
+            animator.ResetTrigger("attack");
+            animator.SetBool("isChasing", false);
+            animator.SetBool("isAttacking", false);
+            animator.SetTrigger("die");
             Destroy(gameObject, 5f);
         }
         else

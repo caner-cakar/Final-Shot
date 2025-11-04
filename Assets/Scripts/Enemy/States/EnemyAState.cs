@@ -4,6 +4,7 @@ public class EnemyAState : IEnemyState
 {
     public void EnterState(EnemyStateManager enemy)
     {
+        enemy.agent.isStopped = true;
         enemy.animator.SetBool("isAttacking", true);
     }
 
@@ -18,6 +19,7 @@ public class EnemyAState : IEnemyState
 
     public void ExitState(EnemyStateManager enemy)
     {
+        enemy.agent.isStopped = false;
         enemy.animator.SetBool("isAttacking", false);
     }
 }

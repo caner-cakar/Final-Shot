@@ -8,7 +8,6 @@ public class EnemyWaypoints : MonoBehaviour
 
     void Start()
     {
-        // Oyunun başında waypointlerin parentını kaldır
         foreach (GameObject wp in waypoints)
         {
             if (wp != null)
