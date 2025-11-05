@@ -665,6 +665,7 @@ MonoBehaviour:
   gameWinPanel: {fileID: 0}
   menuMusicSource: {fileID: 1749617270}
   pauseMenuPanel: {fileID: 0}
+  virtualCam: {fileID: 0}
 --- !u!4 &1749617269
 Transform:
   m_ObjectHideFlags: 0
@@ -691,7 +692,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 4e83af9bb4d7f442db1bf5ce08a0ef75, type: 3}
+  m_Resource: {fileID: 8300000, guid: c3c70ebe4cd2441dbac28ae279807edf, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
