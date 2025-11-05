@@ -23,28 +23,31 @@ Bu projenin, Unity kullanılarak yapılan bir Third Person Shooter oyunudur. Oyu
 | **Chase (Takip)** | Oyuncu tespit mesafesine girer | Oyuncuya doğru koşar |
 | **Attack (Saldırı)** | Oyuncu çok yakına gelir | Vurma animasyonu oynatır, hasar verir |
 | **Return (Geri Dön)** *(opsiyonel)* | Oyuncu görüş alanından çıkarsa | Devriye noktasına geri döner |
-
+---
 ### Tasarım ve Sahne Yapısı
 
 Oyun **3 ana sahneden** oluşmaktadır:
 
 ###  Main Menu Scene
 - Oyun başlatma ve çıkış seçeneklerini içerir.
-- resim
+<img width="826" height="367" alt="AnaMenu" src="https://github.com/user-attachments/assets/84141544-8f25-45c1-a7f1-2fa1a398fc28" />
+
 
 ###  Game Scene 
 - Oyunun ana oynanış kısmıdır.  
 - Oyuncu mekanikleri (koşma, nişan alma, ateş etme vb.) bu sahnede aktif hâle gelir.
-- resim
+<img width="826" height="367" alt="OyunSahnesi" src="https://github.com/user-attachments/assets/6891e8f6-247f-40d5-82d3-ed42f4af9b2c" />
 
-### Pause Scene
-- Esc tuşuna basılarak erişilir.
-- Baştan başlatma, ana menüye dönme seçeneklerini içerir.
+###  Win Scene 
+- Oyuncu tüm düşmanları öldürdüğünde görüntülenir.
+<img width="826" height="367" alt="WinSahnesi" src="https://github.com/user-attachments/assets/6e957f49-0614-4f3b-b073-0bcf73da38df" />
+
 
 ### Game Over Scene
-- Oyuncu öldüğünde veya tüm düşmanları öldürdüğünde görüntülenir.  
-- resim
+- Oyuncu öldüğünde görüntülenir.  
+<img width="826" height="367" alt="ÖlümSahnesi" src="https://github.com/user-attachments/assets/5575f7c4-1493-4484-bdf2-078dc1eec729" />
 
+---
 ### Örnek Çalışmalar ve Karşılaştırmalar
 
 | **Kaynak** | **Çalışma** | **Benzerlik / Farklılık** |
@@ -54,7 +57,7 @@ Oyun **3 ana sahneden** oluşmaktadır:
 | **Zombi AI (Blackthornprod)** | Unity’de zombi düşman yapay zekâsı üzerine hazırlanmış bir örnek. Zombiler oyuncuyu görme mesafesi içinde kovalayıp saldırır. | Benzer düşman tipi kullanılmıştır; ancak bu projede görüş açısı bulunmaz, mesafeye göre düşman harekete geçer.|
 | **Mixamo TPS Prototype** | Mixamo karakterleriyle oluşturulmuş bir TPS projesidir. | Benzer şekilde Mixamo animasyonları kullanılmıştır, ancak bu projede sadece oyuncu karakterinde Blend Tree ile animasyon geçişleri uygulanmıştır. |
 | **Gears of War** | AAA düzeyinde, cover alma ve taktiksel nişan sistemleriyle TPS türünün önemli bir örneğidir. | Bu proje ölçek olarak çok daha basittir; ancak Gears of War’daki düşman takibi fikrinden esinlenilmiştir. Zombilerin oyuncuyu belirli bir mesafede kovalamaya başlaması bu fikirden sadeleştirilmiş biçimde uyarlanmıştır. |
-
+---
 ### Yazılımsal Mimari
 
 Proje geliştirilirken, oyun içi sistemlerin modüler, genişletilebilir ve yönetilebilir olmasına dikkat edilmiştir. Bu amaçla aşağıdaki yazılımsal mimari ve teknik yaklaşımlar kullanılmıştır:
@@ -78,7 +81,7 @@ Proje geliştirilirken, oyun içi sistemlerin modüler, genişletilebilir ve yö
 - Kamera, oyuncunun hareketine göre eşlik eder.  
 - **Shoulder Swap (Omuz Değişimi)** mekaniği eklenmiş ve kamera pozisyonu runtime sırasında dinamik olarak değiştirilmiştir.
 
-
+---
 
 ### Karşılaşılan Zorluklar ve Getirilen Çözümler
 
@@ -89,7 +92,6 @@ Proje geliştirilirken, oyun içi sistemlerin modüler, genişletilebilir ve yö
   - **Unity Asset Store** üzerindeki ücretsiz içerikler araştırıldı.  
   - Birbirinden farklı temaya sahip olan assetler bir araya getirilip ortak bir temaya dönüştürüldü.  
 
----
 
 #### 2. **Oyuncunun Silah Tutuşu Problemi**
 - **Sorun:** Oyuncu karakterin silah tutuş animasyonu ve el hizası tam olarak istenen şekilde ayarlanamadı.  
@@ -97,7 +99,6 @@ Proje geliştirilirken, oyun içi sistemlerin modüler, genişletilebilir ve yö
 - **Çözüm:**  
   - Geçici çözüm olarak el pozisyonu manuel biçimde ayarlandı.  
 
----
 
 #### 3. **Düşmanın Oyuncuyu Takip Etme (Chase) Problemi**
 - **Sorun:** Düşmanların oyuncuyu düzgün bir şekilde takip etmesi ve engelleri aşması beklenen gibi çalışmadı.  
@@ -106,8 +107,7 @@ Proje geliştirilirken, oyun içi sistemlerin modüler, genişletilebilir ve yö
   - Unity’nin **NavMesh Agent** sistemi kullanıldı.    
   - NavMesh, harita sınırları içinde yeniden oluşturularak düşmanların doğal hareket etmesi sağlandı.  
 
----
-## Yapanlar
+### Yapanlar
 
 - [@CanerÇakar ](https://www.github.com/caner-cakar)
 - [@FurkanUğurlu ](https://www.github.com/furkanugurlu)
