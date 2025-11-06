@@ -14,10 +14,8 @@ public class MovementStateManager : MonoBehaviour
     [SerializeField] LayerMask groundMask;
 
     [SerializeField] float gravity = -9.81f;
-    [SerializeField] float jumpForce = 5f;
     Vector3 velocity;
     Vector3 spherePos;
-    bool isJumping = false;
 
     public MovementBaseState currentState;
     public IdleState Idle = new IdleState();
@@ -38,11 +36,6 @@ public class MovementStateManager : MonoBehaviour
     {
         GetDirectionAndMove();
         Gravity();
-
-        if (Input.GetButtonDown("Jump"))
-        {
-            Jump();
-        }
 
         anim.SetFloat("hzInput", horizontalInput);
         anim.SetFloat("vInput", verticalInput);
@@ -75,22 +68,12 @@ public class MovementStateManager : MonoBehaviour
         return Physics.CheckSphere(spherePos, controller.radius - 0.05f, groundMask);
     }
 
-    void Jump()
-    {
-        if (IsGrounded() && !isJumping)
-        {
-            velocity.y = jumpForce;
-            isJumping = true;
-        }
-    }
-
     void Gravity()
     {
         if (!IsGrounded()) velocity.y += gravity * Time.deltaTime;
         else if (velocity.y < 0) 
         {
             velocity.y = -2;
-            isJumping = false;
         }
 
         controller.Move(velocity * Time.deltaTime);
