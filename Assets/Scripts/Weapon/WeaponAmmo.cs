@@ -13,11 +13,15 @@ public class WeaponAmmo : MonoBehaviour
     void Start()
     {
         currentAmmo = clipSize;
+        UpdateAmmoDisplay();
     }
 
-    void Update()
+    void UpdateAmmoDisplay()
     {
-        currentAmmoText.text = currentAmmo.ToString();
+        if (currentAmmoText != null)
+        {
+            currentAmmoText.text = currentAmmo.ToString();
+        }
     }
 
     public void Reload()
@@ -28,7 +32,7 @@ public class WeaponAmmo : MonoBehaviour
             extraAmmo -= ammoToReload;
             currentAmmo += ammoToReload;
         }
-        else if(extraAmmo > 0)
+        else if (extraAmmo > 0)
         {
             if (extraAmmo + currentAmmo > clipSize)
             {
@@ -42,6 +46,8 @@ public class WeaponAmmo : MonoBehaviour
                 extraAmmo = 0;
             }
         }
+        
+        UpdateAmmoDisplay();
     }
 
 }

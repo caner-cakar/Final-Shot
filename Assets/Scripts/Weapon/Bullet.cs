@@ -8,24 +8,28 @@ public class Bullet : MonoBehaviour
     
     void Start()
     {
-        Destroy(this.gameObject, timeToDestroy);
+        Destroy(gameObject, timeToDestroy);
     }
-
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.GetComponentInParent<EnemyHealth>())
+        EnemyHealth enemyHealth = collision.gameObject.GetComponentInParent<EnemyHealth>();
+        
+        if (enemyHealth != null)
         {
-            EnemyHealth enemyHealth = collision.gameObject.GetComponentInParent<EnemyHealth>();
             enemyHealth.TakeDamage(weapon.damage);
 
-            if(enemyHealth.health<=0 && enemyHealth.isDead == false)
+            if (enemyHealth.health <= 0 && !enemyHealth.isDead)
             {
                 Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
-                rb.AddForce(dir * weapon.enemyKickbackForce, ForceMode.Impulse);
+                if (rb != null)
+                {
+                    rb.AddForce(dir * weapon.enemyKickbackForce, ForceMode.Impulse);
+                }
                 enemyHealth.isDead = true;
             }
         }
-        Destroy(this.gameObject);
+        
+        Destroy(gameObject);
     }
 }

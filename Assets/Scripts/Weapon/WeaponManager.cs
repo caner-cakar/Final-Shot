@@ -1,4 +1,3 @@
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
@@ -37,8 +36,13 @@ public class WeaponManager : MonoBehaviour
         bloom = GetComponent<WeaponBloom>();
         actions = GetComponentInParent<ActionStateManager>();
         muzzleFlashLight = GetComponentInChildren<Light>();
-        lightIntensity = muzzleFlashLight.intensity;
-        muzzleFlashLight.intensity = 0;
+        
+        if (muzzleFlashLight != null)
+        {
+            lightIntensity = muzzleFlashLight.intensity;
+            muzzleFlashLight.intensity = 0;
+        }
+        
         muzzleFlashParticles = GetComponentInChildren<ParticleSystem>();
         fireRateTimer = fireRate;
     }
@@ -46,7 +50,11 @@ public class WeaponManager : MonoBehaviour
     void Update()
     {
         if (ShouldFire()) Fire();
-        muzzleFlashLight.intensity = Mathf.Lerp(muzzleFlashLight.intensity, 0, lightReturnSpeed * Time.deltaTime);
+        
+        if (muzzleFlashLight != null)
+        {
+            muzzleFlashLight.intensity = Mathf.Lerp(muzzleFlashLight.intensity, 0, lightReturnSpeed * Time.deltaTime);
+        }
     }
 
     bool ShouldFire()
@@ -64,6 +72,7 @@ public class WeaponManager : MonoBehaviour
     {
         fireRateTimer = 0;
         ammo.currentAmmo--;
+        ammo.SendMessage("UpdateAmmoDisplay", SendMessageOptions.DontRequireReceiver);
         barrelPosition.LookAt(aim.aimPos);
         barrelPosition.localEulerAngles = bloom.BloomAngle(barrelPosition);
 
@@ -86,7 +95,14 @@ public class WeaponManager : MonoBehaviour
     
     void TriggerMuzzleFlash()
     {
-        muzzleFlashParticles.Play();
-        muzzleFlashLight.intensity = lightIntensity;
+        if (muzzleFlashParticles != null)
+        {
+            muzzleFlashParticles.Play();
+        }
+        
+        if (muzzleFlashLight != null)
+        {
+            muzzleFlashLight.intensity = lightIntensity;
+        }
     }
 }
