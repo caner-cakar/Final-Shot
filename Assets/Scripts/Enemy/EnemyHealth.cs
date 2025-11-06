@@ -8,13 +8,11 @@ public class EnemyHealth : MonoBehaviour
     Animator animator;
     NavMeshAgent agent;
 
-
     void Start()
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
     }
-    
 
 
     public void TakeDamage(float damage)
@@ -38,6 +36,5 @@ public class EnemyHealth : MonoBehaviour
             animator.SetTrigger("damage");
             isDead = false;
         }
-
-    }    
+    }
 }

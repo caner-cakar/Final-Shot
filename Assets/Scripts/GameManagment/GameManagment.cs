@@ -10,23 +10,27 @@ public class GameManagment : MonoBehaviour
     public GameObject pauseMenuPanel;
     public CinemachineVirtualCamera virtualCam;
 
-
     private bool isPaused = false;
     private bool gameWon = false;
     private float checkInterval = 0.5f;
     private float nextCheckTime = 0f;
+    private CinemachineBrain cinemachineBrain;
 
     private void Start()
     {
         gameEndPanel.SetActive(false);
         if (gameWinPanel != null) gameWinPanel.SetActive(false);
 
+        if (Camera.main != null)
+        {
+            cinemachineBrain = Camera.main.GetComponent<CinemachineBrain>();
+        }
+
         string currentSceneName = SceneManager.GetActiveScene().name;
 
         if (currentSceneName == "MainMenu")
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            SetCursorState(true);
             Time.timeScale = 0f;
             if (menuMusicSource != null)
             {
@@ -36,8 +40,7 @@ public class GameManagment : MonoBehaviour
         }
         else if (currentSceneName == "MainScene")
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            SetCursorState(false);
             Time.timeScale = 1f;
         }
     }
@@ -69,9 +72,8 @@ public class GameManagment : MonoBehaviour
 
     void GameWin()
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        Camera.main.GetComponent<Cinemachine.CinemachineBrain>().enabled = false;
+        SetCursorState(true);
+        SetCinemachineBrainState(false);
         gameWon = true;
         if (gameWinPanel != null)
             gameWinPanel.SetActive(true);
@@ -81,8 +83,7 @@ public class GameManagment : MonoBehaviour
 
     public void StartButton()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        SetCursorState(false);
         if (menuMusicSource != null)
         {
             menuMusicSource.Stop();
@@ -94,9 +95,8 @@ public class GameManagment : MonoBehaviour
 
     void PauseGame()
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;  
-        Camera.main.GetComponent<Cinemachine.CinemachineBrain>().enabled = false;
+        SetCursorState(true);
+        SetCinemachineBrainState(false);
 
         Time.timeScale = 0f;
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(true);
@@ -106,9 +106,8 @@ public class GameManagment : MonoBehaviour
 
     public void ResumeGame()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        Camera.main.GetComponent<Cinemachine.CinemachineBrain>().enabled = true;
+        SetCursorState(false);
+        SetCinemachineBrainState(true);
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
@@ -116,8 +115,7 @@ public class GameManagment : MonoBehaviour
 
     public void Death()
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        SetCursorState(true);
         if (gameEndPanel != null)
             gameEndPanel.SetActive(true);
         Time.timeScale = 0f;
@@ -125,9 +123,8 @@ public class GameManagment : MonoBehaviour
 
     public void PlayAgain()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        Camera.main.GetComponent<Cinemachine.CinemachineBrain>().enabled = true;
+        SetCursorState(false);
+        SetCinemachineBrainState(true);
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainScene");
     }
@@ -144,5 +141,19 @@ public class GameManagment : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
+    }
+
+    private void SetCursorState(bool visible)
+    {
+        Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = visible;
+    }
+
+    private void SetCinemachineBrainState(bool enabled)
+    {
+        if (cinemachineBrain != null)
+        {
+            cinemachineBrain.enabled = enabled;
+        }
     }
 }

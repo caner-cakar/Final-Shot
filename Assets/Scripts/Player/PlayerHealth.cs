@@ -44,14 +44,13 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
-
         animator.SetTrigger("isDead");
         Debug.Log("Player Died!");
         characterController.enabled = false;
         movementStateManager.enabled = false;
         aimStateManager.enabled = false;
+        actionStateManager.enabled = false;
         gameManager.Death();
-
 
         if (weapon != null)
             weapon.SetActive(false);

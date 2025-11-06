@@ -15,10 +15,10 @@ public class DamageToPlayer : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if(other.CompareTag("Player") && canDamage && animator.GetBool("isAttacking"))
+        if (other.CompareTag("Player") && canDamage && animator.GetBool("isAttacking"))
         {
             PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
-            if(playerHealth != null)
+            if (playerHealth != null)
             {
                 playerHealth.TakeDamage(damage);
                 Debug.Log("Hit to player");
