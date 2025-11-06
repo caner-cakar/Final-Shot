@@ -3,19 +3,21 @@ using UnityEngine;
 public class MovementStateManager : MonoBehaviour
 {
     public float currentMoveSpeed = 3f;
-    public float walkSpeed =3f, walkBackSpeed=2f;
-    public float runSpeed =7f, runBackSpeed =5f;
-    public float crouchSpeed =2f, crouchBackSpeed =1f;
-    [HideInInspector]public float horizontalInput;
-    [HideInInspector]public float verticalInput;
+    public float walkSpeed = 3f, walkBackSpeed = 2f;
+    public float runSpeed = 7f, runBackSpeed = 5f;
+    public float crouchSpeed = 2f, crouchBackSpeed = 1f;
+    [HideInInspector] public float horizontalInput;
+    [HideInInspector] public float verticalInput;
     [HideInInspector] public Vector3 dir;
     CharacterController controller;
-    [SerializeField] float groundYOoffset;
+    [SerializeField] float groundYOffset;
     [SerializeField] LayerMask groundMask;
 
-    [SerializeField] float gravit = -9.81f;
+    [SerializeField] float gravity = -9.81f;
+    [SerializeField] float jumpForce = 5f;
     Vector3 velocity;
     Vector3 spherePos;
+    bool isJumping = false;
 
     public MovementBaseState currentState;
     public IdleState Idle = new IdleState();
@@ -36,6 +38,11 @@ public class MovementStateManager : MonoBehaviour
     {
         GetDirectionAndMove();
         Gravity();
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            Jump();
+        }
 
         anim.SetFloat("hzInput", horizontalInput);
         anim.SetFloat("vInput", verticalInput);
@@ -64,28 +71,34 @@ public class MovementStateManager : MonoBehaviour
 
     bool IsGrounded()
     {
-        spherePos = new Vector3(transform.position.x, transform.position.y - groundYOoffset, transform.position.z);
-        if (Physics.CheckSphere(spherePos, controller.radius - 0.05f, groundMask))
+        spherePos = new Vector3(transform.position.x, transform.position.y - groundYOffset, transform.position.z);
+        return Physics.CheckSphere(spherePos, controller.radius - 0.05f, groundMask);
+    }
+
+    void Jump()
+    {
+        if (IsGrounded() && !isJumping)
         {
-            return true;
-        }
-        else
-        {
-            return false;
+            velocity.y = jumpForce;
+            isJumping = true;
         }
     }
 
     void Gravity()
     {
-        if (!IsGrounded()) velocity.y += gravit * Time.deltaTime;
-        else if (velocity.y < 0) velocity.y = -2;
+        if (!IsGrounded()) velocity.y += gravity * Time.deltaTime;
+        else if (velocity.y < 0) 
+        {
+            velocity.y = -2;
+            isJumping = false;
+        }
 
         controller.Move(velocity * Time.deltaTime);
     }
 
     void OnDrawGizmos()
     {
-        if(controller != null)
+        if (controller != null)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(spherePos, controller.radius - 0.05f);
