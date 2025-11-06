@@ -3,6 +3,8 @@
 
 Bu projenin, Unity kullanılarak yapılan bir Third Person Shooter oyunudur. Oyuncu klavye ve mouse ile karakteri yönetir. 
 >Senaryo: Bir köyü zombi salgını esir almıştır. Köyünü bu durumdan kurtarmak isteyen köylü aksiyon almaya başlar.
+>
+>[itch.io'da oyna](https://canercakar.itch.io/village-defender)
 
 
 ### Oyuncu Mekanikleri
